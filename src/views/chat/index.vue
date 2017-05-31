@@ -1,7 +1,7 @@
 <style scoped>
     .bg {
-        height: 100vh;
-        overflow: auto;
+      height: 100%;
+      overflow: auto;
     }
     p {
       margin: 16px;
@@ -107,11 +107,6 @@
           <p><span>{{ item.nickname }}{{ item.type == 'join' ? '加入了聊天室':'离开了聊天室'}}</span></p>
         </template>
       </template>
-      <div class="input">
-        <mt-field label="" v-model="content" :placeholder="'输入聊天内容'" autofocus="autofocus">
-          <mt-button type="primary" size="small" @click="send()">发送</mt-button>
-        </mt-field>
-      </div>
     </div>
   </div>
 </template>
@@ -119,11 +114,6 @@
 <script>
 import { mapMutations, mapGetters } from 'vuex'
 export default {
-  data () {
-    return {
-      content: ''
-    }
-  },
   mounted () {
     this.UPDATE_TITLE('前端技术聊天室')
   },
@@ -136,19 +126,12 @@ export default {
   methods: {
     ...mapMutations([
       'UPDATE_TITLE'
-    ]),
-    send: function () {
-      this.$socket.emit('messageClient', {
-        userId: this.$store.state.userInfo.id,
-        nickname: this.$store.state.userInfo.nickname,
-        content: this.content
-      })
-      this.content = ''
-    }
+    ])
   },
   watch: {
     messageList (val) {
       this.$nextTick(() => {
+        console.log(this.$el.clientHeight)
         this.$el.scrollTop = this.$refs.contentList.clientHeight
       })
     }

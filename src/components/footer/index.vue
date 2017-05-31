@@ -1,4 +1,10 @@
 <template>
+  <div>
+    <form v-show="isSelected === 'chat'" style="position:absolute;bottom:50px;left:0;right:0;" onsubmit="return false" @click="show">
+      <mt-field label="" v-model="content" :placeholder="'输入聊天内容'" autofocus="autofocus">
+        <mt-button type="primary" size="small" @click.stop="send()">发送</mt-button>
+      </mt-field>
+    </form>
     <mt-tabbar>
         <mt-tab-item id="tab1" :class="{'is-selected': isSelected === 'chat'}" @click.native="router('chat')">
             <i class="icon iconfont chat"><span class="circle" v-show="newMessage">{{newMessage < 99 ? newMessage : '...'}}</span>&#xe601;</i>
@@ -9,13 +15,15 @@
             ???
         </mt-tab-item>
     </mt-tabbar>
+  </div>
 </template>
 <script>
 import { mapMutations, mapGetters } from 'vuex'
 export default {
   data () {
     return {
-      isSelected: 'chat'
+      isSelected: 'chat',
+      content: ''
     }
   },
   computed: {
@@ -47,6 +55,17 @@ export default {
         this.$router.push({ name })
       }
       this.$router.push({name})
+    },
+    send () {
+      this.$socket.emit('messageClient', {
+        userId: this.$store.state.userInfo.id,
+        nickname: this.$store.state.userInfo.nickname,
+        content: this.content
+      })
+      this.content = ''
+    },
+    show () {
+      console.log(document.getElementById('bg'))
     }
   },
   watch: {

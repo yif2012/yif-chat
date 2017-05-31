@@ -14,7 +14,7 @@ import './styles/icon/iconfont.css'
 
 Vue.config.productionTip = false
 Vue.use(mintUi)
-Vue.use(VueSocketio, 'http://localhost:1234/s')
+Vue.use(VueSocketio, '/s')
 
 /* eslint-disable no-new */
 new Vue({

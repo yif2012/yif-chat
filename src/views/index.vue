@@ -1,7 +1,10 @@
+<style>
+  .mainIndex {height: 100vh;overflow: hidden;}
+</style>
 <template>
   <div class="mainIndex">
     <top-head></top-head>
-      <router-view></router-view>
+      <router-view></router-view>    
     <foot></foot>
   </div>
 </template>
